@@ -1,0 +1,40 @@
+# 敏感配置
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# 生成的大文件（API密钥、视频、音频）
+etymology-animation/data/video/
+etymology-animation/data/audio/
+etymology-animation/data/raw/
+etymology-animation/data/png/
+
+# 采集的元数据（版权考虑）
+etymology-animation/data/metadata/
+
+# 生成的Prompt
+etymology-animation/data/prompts/
+
+# 日志
+*.log
+
+# 演示视频（太大）
+etymology-animation/demo/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
