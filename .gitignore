@@ -1,3 +1,8 @@
+# 论文文件
+AIGC*
+*.pdf
+*.pptx
+
 # 敏感配置
 .env
 .env.*
