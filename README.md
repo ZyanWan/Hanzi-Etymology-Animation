@@ -30,7 +30,7 @@ cd Hanzi/etymology-animation
 # Install dependencies
 pip install -r requirements.txt
 
-# 1. Scrape character data
+# 1. Scrape character data (example: "qu" character)
 python -m scraper.main qu --mode essential
 
 # 2. Convert SVG to PNG
@@ -47,20 +47,61 @@ python -m processors.wan_video \
 python -m processors.tts --text "The original meaning of qu is to cut off enemy ears" --output data/audio/qu/narration.wav
 ```
 
+> **Note:** The Chinese prompt above is required by the video generation model — it must be in Chinese to produce correct character animations. The model understands Chinese calligraphy descriptions better than English.
+
 ## Setup
 
 ### API Keys
 
-Create `etymology-animation/.env`:
+This project requires two API services. You need to register and obtain keys from each.
+
+#### 1. Alibaba Cloud DashScope (Video Generation)
+
+Used for: Wan2.7 AI video generation (character evolution animations)
+
+**Steps:**
+1. Go to [Alibaba Cloud DashScope](https://dashscope.console.aliyun.com/)
+2. Register / log in with your Alibaba Cloud account
+3. Open **API Key Management** from the left sidebar
+4. Click **Create API Key** and copy the generated key
+5. New users get free trial credits (check the console for current offer)
+
+**Pricing:** ~0.24 CNY per 5-second video at 720P
+
+#### 2. Volcano Engine (TTS Voice Synthesis)
+
+Used for: Text-to-speech narration (explaining character meaning)
+
+**Steps:**
+1. Go to [Volcano Engine Console](https://console.volcengine.com/)
+2. Register / log in
+3. Search for "Speech Synthesis" (语音合成) in the product console
+4. Create an application to get your **AppID**
+5. Go to **Access Key** management to get your **Access Key ID**
+
+**Pricing:** Free tier available for basic usage
+
+#### Configure Keys
+
+Copy the example file and fill in your keys:
+
+```bash
+cd etymology-animation
+cp .env.example .env
+```
+
+Edit `.env` with your keys:
 
 ```env
 # Alibaba Cloud DashScope (Wan2.7 video generation)
-DASHSCOPE_API_KEY=your_dashscope_key
+DASHSCOPE_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
 
 # Volcano Engine (TTS voice synthesis)
-VOLC_APPID=your_app_id
-VOLC_ACCESS_KEY_ID=your_access_key
+VOLC_APPID=1234567890
+VOLC_ACCESS_KEY_ID=your_access_key_id_here
 ```
+
+> **Security:** `.env` is already in `.gitignore` and will not be committed to Git.
 
 ### Dependencies
 
