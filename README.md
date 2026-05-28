@@ -1,6 +1,6 @@
 # Hanzi Etymology Animation
 
-A tool for creating animated videos showing the evolution of Chinese characters from oracle bone script (甲骨文) to modern regular script (楷书). Designed for teaching Chinese as a foreign language — helping students understand *why* a character looks the way it does.
+A tool for creating animated videos showing the evolution of Chinese characters from oracle bone script to modern regular script. Designed for teaching Chinese as a foreign language — helping students understand *why* a character looks the way it does.
 
 ## Why This Matters
 
@@ -10,7 +10,7 @@ Every Chinese character is a mini visual story. By animating the evolution, stud
 - **Why it means what it means** — the link between original meaning and modern usage
 - **How to remember it** — visual anchoring through shape transformation
 
-> Example: 取 (qǔ, "to take") originally depicted a hand grabbing an enemy's ear — an ancient war trophy practice. The animation shows this pictograph gradually transforming into the modern character.
+> Example: The character "qu" originally depicted a hand grabbing an enemy's ear — an ancient war trophy practice. The animation shows this pictograph gradually transforming into the modern character.
 
 ## Features
 
@@ -31,20 +31,20 @@ cd Hanzi/etymology-animation
 pip install -r requirements.txt
 
 # 1. Scrape character data
-python -m scraper.main 取 --mode essential
+python -m scraper.main qu --mode essential
 
 # 2. Convert SVG to PNG
-python -m processors.svg_converter 取
+python -m processors.svg_converter qu
 
 # 3. Generate evolution video (one continuous animation)
 python -m processors.wan_video \
-    --first data/png/取/jiaguwen.png \
-    --prompt "白底黑字的取字，从甲骨文象形笔画开始，笔画稚拙线条不均匀，像一只手抓着一只耳朵，逐渐笔画变规整变圆润演变为金文，再逐渐线条统一圆润演变为小篆，最后横平竖直演变为楷书取字，整个过程是同一个字在不同朝代的字形之间自然流畅地连续变化，保持字形完整不变形，书法风格" \
+    --first data/png/qu/jiaguwen.png \
+    --prompt "A white background with black calligraphy of the character qu, starting from oracle bone script with crude uneven strokes resembling a hand grabbing an ear, gradually becoming more regular and rounded as it evolves into bronze inscriptions, then lines becoming uniform and flowing as it becomes small seal script, finally becoming straight and squared as it becomes regular script, the entire process showing the same character naturally and smoothly transforming across different dynasties while maintaining structural integrity, calligraphy style" \
     --resolution 720P --duration 10 \
-    -o data/video/取/取_完整演变.mp4
+    -o data/video/qu/qu_evolution.mp4
 
 # 4. Generate TTS narration
-python -m processors.tts --text "取字的本意是割取敌人耳朵" --output data/audio/取/scene_1.wav
+python -m processors.tts --text "The original meaning of qu is to cut off enemy ears" --output data/audio/qu/narration.wav
 ```
 
 ## Setup
@@ -115,18 +115,18 @@ The tool handles different character types with appropriate animation strategies
 
 | Type | Description | Example | Animation Value |
 |------|-------------|---------|-----------------|
-| Pictograph (象形) | Direct drawing of an object | 日, 月, 山, 水 | ★★★ Most intuitive |
-| Compound ideograph (会意) | Two pictographs combined | 取, 休, 明, 森 | ★★★ Story-rich |
-| Simple indicative (指事) | Pictograph + abstract marker | 上, 下, 本, 刃 | ★★ Clever |
-| Phono-semantic (形声) | Meaning + sound component | 江, 河, 湖 | ★ Low value |
+| Pictograph | Direct drawing of an object | ri, yue, shan, shui | Most intuitive |
+| Compound ideograph | Two pictographs combined | qu, xiu, ming, sen | Story-rich |
+| Simple indicative | Pictograph + abstract marker | shang, xia, ben, ren | Clever |
+| Phono-semantic | Meaning + sound component | jiang, hu, hu | Low value |
 
-**Recommendation**: Start with P0 (pictographs) and P1 (compound ideographs).
+**Recommendation**: Start with pictographs and compound ideographs for best results.
 
 ## Quality Checklist
 
 - [ ] Scene description is concise (not verbose)
 - [ ] Character features are specific (dynasty + characteristics)
-- [ ] "保持字形完整不变形" (maintain shape integrity) is included
+- [ ] Shape integrity instruction is included
 - [ ] Meaning is integrated, not just shape morphing
 - [ ] Background is white, character is black
 - [ ] Animation is smooth and continuous
@@ -135,11 +135,11 @@ The tool handles different character types with appropriate animation strategies
 
 See [`docs/`](etymology-animation/docs/) for detailed guides:
 
-- [Methodology & Character Selection](etymology-animation/docs/01_方法论与选字.md)
-- [Data Collection](etymology-animation/docs/02_字源采集.md)
-- [AI Video Generation](etymology-animation/docs/04_AI视频生成.md)
-- [Prompt Design](etymology-animation/docs/05_Prompt集.md)
-- [Post-Production](etymology-animation/docs/06_后期制作.md)
+- [Methodology & Character Selection](etymology-animation/docs/01_methodology.md)
+- [Data Collection](etymology-animation/docs/02_data_collection.md)
+- [AI Video Generation](etymology-animation/docs/04_video_generation.md)
+- [Prompt Design](etymology-animation/docs/05_prompt_design.md)
+- [Post-Production](etymology-animation/docs/06_post_production.md)
 
 ## License
 
