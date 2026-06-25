@@ -1,187 +1,187 @@
-# Hanzi Etymology Animation
+# 汉字词源动画工具
 
-A tool for creating animated videos showing the evolution of Chinese characters from oracle bone script to modern regular script. Designed for teaching Chinese as a foreign language — helping students understand *why* a character looks the way it does.
+一款用于创建汉字演变动画视频的工具，展示汉字从甲骨文到现代楷书的演变历程。专为对外汉语教学设计——帮助学生理解汉字为何呈现如今的面貌。
 
-## Why This Matters
+## 为什么这很重要
 
-Every Chinese character is a mini visual story. By animating the evolution, students can intuitively grasp:
+每个汉字都是一个微型视觉故事。通过动画展示演变过程，学生可以直观地理解：
 
-- **Why the character looks like this** — its pictographic origin
-- **Why it means what it means** — the link between original meaning and modern usage
-- **How to remember it** — visual anchoring through shape transformation
+- **为什么这个字长这样**——它的象形起源
+- **为什么它表示这个意思**——原始含义与现代用法之间的联系
+- **如何记住它**——通过字形变化进行视觉锚定
 
-> Example: The character "qu" originally depicted a hand grabbing an enemy's ear — an ancient war trophy practice. The animation shows this pictograph gradually transforming into the modern character.
+> 示例："取"字最初描绘的是一只手抓住敌人的耳朵——这是古代割取敌人首级或耳朵作为战利品的做法。动画展示这个象形字如何逐渐演变成现代汉字。
 
-## Features
+## 功能特点
 
-- **Automated data scraping** — pulls character etymology data (SVG glyphs + metadata) from zdic.net
-- **SVG-to-PNG conversion** — prepares images for AI video generation
-- **AI video generation** — uses Alibaba Cloud's Wan2.7 model to create smooth evolution animations
-- **TTS narration** — generates voiceover explaining character meaning (Volcano Engine)
-- **Continuous evolution** — single prompt generates fluid transformation across all historical stages
+- **自动化数据采集**——从汉典网抓取汉字词源数据（SVG字形 + 元数据）
+- **SVG转PNG转换**——为AI视频生成准备图像素材
+- **AI视频生成**——使用阿里云Wan2.7模型创建流畅的演变动画
+- **TTS语音解说**——生成讲解汉字含义的语音旁白（火山引擎）
+- **连续演变**——单次提示词即可生成贯穿所有历史阶段的流畅变形动画
 
-## Quick Start
+## 快速开始
 
 ```bash
-# Clone the repo
+# 克隆仓库
 git clone https://github.com/your-username/Hanzi.git
 cd Hanzi/etymology-animation
 
-# Install dependencies
+# 安装依赖
 pip install -r requirements.txt
 
-# 1. Scrape character data (example: "qu" character)
+# 1. 采集字符数据（以"取"字为例）
 python -m scraper.main qu --mode essential
 
-# 2. Convert SVG to PNG
+# 2. 将SVG转换为PNG
 python -m processors.svg_converter qu
 
-# 3. Generate evolution video (one continuous animation)
+# 3. 生成演变视频（单次连续动画）
 python -m processors.wan_video \
     --first data/png/qu/jiaguwen.png \
-    --prompt "A white background with black calligraphy of the character qu, starting from oracle bone script with crude uneven strokes resembling a hand grabbing an ear, gradually becoming more regular and rounded as it evolves into bronze inscriptions, then lines becoming uniform and flowing as it becomes small seal script, finally becoming straight and squared as it becomes regular script, the entire process showing the same character naturally and smoothly transforming across different dynasties while maintaining structural integrity, calligraphy style" \
+    --prompt "白色背景上呈现黑色书法字形取，从笔画粗细不均、字形类似手抓耳朵的甲骨文，逐渐演变为更加规整圆润的金文，随后笔画统一流畅的小篆，最后成为方正的楷书，整个过程展示同一汉字在不同朝代间自然流畅地变形转化，同时保持结构完整性，书风遒劲有力" \
     --resolution 720P --duration 10 \
     -o data/video/qu/qu_evolution.mp4
 
-# 4. Generate TTS narration
-python -m processors.tts --text "The original meaning of qu is to cut off enemy ears" --output data/audio/qu/narration.wav
+# 4. 生成TTS语音解说
+python -m processors.tts --text "取的本义是割取敌人的耳朵" --output data/audio/qu/narration.wav
 ```
 
-> **Note:** The Chinese prompt above is required by the video generation model — it must be in Chinese to produce correct character animations. The model understands Chinese calligraphy descriptions better than English.
+> **注意**：上述中文提示词是视频生成模型的必需输入——必须使用中文才能产生正确的汉字动画效果。该模型对中文书法描述的理解优于英文。
 
-## Setup
+## 安装配置
 
-### API Keys
+### API密钥
 
-This project requires two API services. You need to register and obtain keys from each.
+本项目需要两个API服务，需分别注册获取密钥。
 
-#### 1. Alibaba Cloud DashScope (Video Generation)
+#### 1. 阿里云DashScope（视频生成）
 
-Used for: Wan2.7 AI video generation (character evolution animations)
+用途：Wan2.7 AI视频生成（汉字演变动画）
 
-**Steps:**
-1. Go to [Alibaba Cloud DashScope](https://dashscope.console.aliyun.com/)
-2. Register / log in with your Alibaba Cloud account
-3. Open **API Key Management** from the left sidebar
-4. Click **Create API Key** and copy the generated key
-5. New users get free trial credits (check the console for current offer)
+**步骤：**
+1. 访问[阿里云DashScope](https://dashscope.console.aliyun.com/)
+2. 使用阿里云账号注册/登录
+3. 在左侧导航栏打开**API-KEY管理**
+4. 点击**创建API-KEY**并复制生成的密钥
+5. 新用户享有免费试用额度（请查看当前优惠）
 
-**Pricing:** ~0.24 CNY per 5-second video at 720P
+**价格：** 约0.24元/5秒视频（720P）
 
-#### 2. Volcano Engine (TTS Voice Synthesis)
+#### 2. 火山引擎（TTS语音合成）
 
-Used for: Text-to-speech narration (explaining character meaning)
+用途：文本转语音旁白（讲解汉字含义）
 
-**Steps:**
-1. Go to [Volcano Engine Console](https://console.volcengine.com/)
-2. Register / log in
-3. Search for "Speech Synthesis" (语音合成) in the product console
-4. Create an application to get your **AppID**
-5. Go to **Access Key** management to get your **Access Key ID**
+**步骤：**
+1. 访问[火山引擎控制台](https://console.volcengine.com/)
+2. 注册/登录
+3. 在产品控制台搜索"语音合成"
+4. 创建应用以获取**AppID**
+5. 进入**访问密钥**管理获取**Access Key ID**
 
-**Pricing:** Free tier available for basic usage
+**价格：** 基础用量免费
 
-#### Configure Keys
+#### 配置密钥
 
-Copy the example file and fill in your keys:
+复制示例文件并填写密钥：
 
 ```bash
 cd etymology-animation
 cp .env.example .env
 ```
 
-Edit `.env` with your keys:
+编辑`.env`填入你的密钥：
 
 ```env
-# Alibaba Cloud DashScope (Wan2.7 video generation)
+# 阿里云DashScope（Wan2.7视频生成）
 DASHSCOPE_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
 
-# Volcano Engine (TTS voice synthesis)
+# 火山引擎（TTS语音合成）
 VOLC_APPID=1234567890
 VOLC_ACCESS_KEY_ID=your_access_key_id_here
 ```
 
-> **Security:** `.env` is already in `.gitignore` and will not be committed to Git.
+> **安全性**：`.env`已在`.gitignore`中，不会被提交到Git。
 
-### Dependencies
+### 依赖安装
 
 ```bash
 pip install requests cairosvg pillow websockets python-dotenv
 ```
 
-For web scraping:
+网页抓取所需：
 ```bash
 pip install playwright
 playwright install chromium
 ```
 
-## Workflow
+## 工作流程
 
 ```
-1. Scrape    →  Collect SVG glyphs + etymology metadata from zdic.net
-2. Convert   →  Transform SVGs to 1024x1024 PNGs
-3. Prompt    →  Design evolution narrative based on character meaning
-4. Generate  →  Create continuous animation with Wan2.7
-5. Narrate   →  Add TTS voiceover explaining the character
-6. Assemble  →  Combine video + audio + subtitles
+1. 采集    →  从汉典网收集SVG字形 + 词源元数据
+2. 转换    →  将SVG转换为1024x1024的PNG图片
+3. 撰写提示词 →  根据汉字含义设计演变叙事
+4. 生成    →  使用Wan2.7创建连续动画
+5. 配音    →  添加讲解汉字含义的TTS语音旁白
+6. 合成    →  合并视频 + 音频 + 字幕
 ```
 
-## Project Structure
+## 项目结构
 
 ```
 ├── etymology-animation/
-│   ├── scraper/               # Data collection from zdic.net
-│   │   ├── main.py            # Entry point
-│   │   └── zdic_scraper.py    # Web scraper
-│   ├── processors/            # Data processing modules
-│   │   ├── wan_video.py       # Alibaba Cloud Wan2.7 video gen
-│   │   ├── tts.py             # Volcano Engine TTS
-│   │   ├── svg_converter.py   # SVG to PNG conversion
-│   │   ├── prompt_generator.py # Prompt templates (reference)
-│   │   └── segment_analyzer.py # Character type analysis
+│   ├── scraper/               # 从汉典网采集数据
+│   │   ├── main.py            # 入口文件
+│   │   └── zdic_scraper.py    # 网页抓取器
+│   ├── processors/            # 数据处理模块
+│   │   ├── wan_video.py       # 阿里云Wan2.7视频生成
+│   │   ├── tts.py             # 火山引擎TTS
+│   │   ├── svg_converter.py   # SVG转PNG
+│   │   ├── prompt_generator.py # 提示词模板（参考）
+│   │   └── segment_analyzer.py # 字符类型分析
 │   ├── data/
-│   │   ├── raw/[char]/        # Original SVGs
-│   │   ├── png/[char]/        # Converted PNGs
-│   │   ├── metadata/[char].json # Etymology metadata
-│   │   ├── audio/[char]/      # TTS audio files
-│   │   └── video/[char]/      # Generated videos
-│   └── docs/                  # Workflow documentation
-├── AGENTS.md                  # AI agent instructions
+│   │   ├── raw/[char]/        # 原始SVG文件
+│   │   ├── png/[char]/        # 转换后的PNG文件
+│   │   ├── metadata/[char].json # 词源元数据
+│   │   ├── audio/[char]/      # TTS音频文件
+│   │   └── video/[char]/      # 生成的视频文件
+│   └── docs/                  # 工作流程文档
+├── AGENTS.md                  # AI智能体说明
 └── README.md
 ```
 
-## Character Types
+## 汉字类型
 
-The tool handles different character types with appropriate animation strategies:
+工具针对不同类型的汉字采用相应的动画策略：
 
-| Type | Description | Example | Animation Value |
-|------|-------------|---------|-----------------|
-| Pictograph | Direct drawing of an object | ri, yue, shan, shui | Most intuitive |
-| Compound ideograph | Two pictographs combined | qu, xiu, ming, sen | Story-rich |
-| Simple indicative | Pictograph + abstract marker | shang, xia, ben, ren | Clever |
-| Phono-semantic | Meaning + sound component | jiang, hu, hu | Low value |
+| 类型 | 说明 | 示例 | 动画价值 |
+|------|------|------|----------|
+| 象形字 | 事物的直接图画 | 日、月、山、水 | 最为直观 |
+| 会意字 | 两个象形字组合 | 取、休、明、森 | 故事性强 |
+| 指事字 | 象形字 + 抽象标记 | 上、下、本、刃 | 巧妙精妙 |
+| 形声字 | 义符 + 声符组合 | 江、湖、糊 | 价值较低 |
 
-**Recommendation**: Start with pictographs and compound ideographs for best results.
+**建议**：优先选择象形字和会意字，效果最佳。
 
-## Quality Checklist
+## 质量检查清单
 
-- [ ] Scene description is concise (not verbose)
-- [ ] Character features are specific (dynasty + characteristics)
-- [ ] Shape integrity instruction is included
-- [ ] Meaning is integrated, not just shape morphing
-- [ ] Background is white, character is black
-- [ ] Animation is smooth and continuous
+- [ ] 场景描述简洁（不冗长）
+- [ ] 汉字特征具体（朝代 + 特征）
+- [ ] 包含结构完整性指令
+- [ ] 融入含义讲解，而非单纯字形变形
+- [ ] 背景为白色，汉字为黑色
+- [ ] 动画流畅连续
 
-## Documentation
+## 文档
 
-See [`docs/`](etymology-animation/docs/) for detailed guides:
+详见[`docs/`](etymology-animation/docs/)中的详细指南：
 
-- [Methodology & Character Selection](etymology-animation/docs/01_methodology.md)
-- [Data Collection](etymology-animation/docs/02_data_collection.md)
-- [AI Video Generation](etymology-animation/docs/04_video_generation.md)
-- [Prompt Design](etymology-animation/docs/05_prompt_design.md)
-- [Post-Production](etymology-animation/docs/06_post_production.md)
+- [方法论与汉字选择](etymology-animation/docs/01_methodology.md)
+- [数据采集](etymology-animation/docs/02_data_collection.md)
+- [AI视频生成](etymology-animation/docs/04_video_generation.md)
+- [提示词设计](etymology-animation/docs/05_prompt_design.md)
+- [后期制作](etymology-animation/docs/06_post_production.md)
 
-## License
+## 开源许可
 
 MIT
